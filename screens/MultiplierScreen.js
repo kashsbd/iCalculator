@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Center, Select, VStack, CheckIcon, Input, Button } from 'native-base';
-import { View, Text, StyleSheet, ScrollView,TouchableOpacity,Clipboard } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Center, Input, Button } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-const HomeScreen = () => {
 
+
+const MultiplierScreen = () => {
 
   const [answer, setAnswer] = useState(null);
-  const [typeValue, setTypeValue] = useState('');
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
@@ -16,33 +16,27 @@ const HomeScreen = () => {
     isValidDay: true,
     isValidMonth: true,
     isValidYear: true,
-    isValidType: true,
     day: '',
     month: '',
     year: '',
-    type: ''
+
   });
 
-  const handleTypeChange = (val) => {
-    if (val.trim().length === 0) {
-      setError({
-        ...error,
-        isValidType: false,
-        type: 'Please Select One'
-      });
-      setTypeValue(val);
+  const [dayOne, setDayOne] = useState('');
+  const [monthOne, setMonthOne] = useState('');
+  const [yearOne, setYearOne] = useState('');
+  const [errorOne, setErrorOne] = useState({
+    isValidDay: true,
+    isValidMonth: true,
+    isValidYear: true,
+    day: '',
+    month: '',
+    year: '',
 
-    }
-    else {
-      setError({
-        ...error,
-        isValidType: true,
-        type: ''
-      });
-      setTypeValue(val);
+  });
 
-    }
-  }
+
+
 
   const handleDayChange = (val) => {
 
@@ -66,6 +60,28 @@ const HomeScreen = () => {
 
   }
 
+  const handleDayChangeOne = (val) => {
+
+    if (parseInt(val) > -1) {
+      setError({
+        ...error,
+        isValidDay: true,
+        day: ''
+      });
+      setDayOne(val);
+    }
+
+    else {
+      setErrorOne({
+        ...error,
+        isValidDay: false,
+        day: 'Enter Your Day'
+      });
+      setDayOne(val);
+    }
+
+  }
+
   const handleMonthChange = (val) => {
     if (parseInt(val) > -1) {
       setError({
@@ -80,9 +96,29 @@ const HomeScreen = () => {
       setError({
         ...error,
         isValidMonth: false,
-        month: 'Enter Your Month'
+        month: 'Enter your Month'
       });
       setMonth(val);
+    }
+  }
+
+  const handleMonthChangeOne = (val) => {
+    if (parseInt(val) > -1) {
+      setErrorOne({
+        ...error,
+        isValidMonth: true,
+        month: ''
+      });
+      setMonthOne(val);
+    }
+
+    else {
+      setErrorOne({
+        ...error,
+        isValidMonth: false,
+        month: 'Enter Your Month'
+      });
+      setMonthOne(val);
     }
   }
 
@@ -106,116 +142,48 @@ const HomeScreen = () => {
     }
   }
 
-  const handleValidation = () => {
-    if (typeValue.trim().length === 0) {
-      setError({
+  const handleYearChangeOne = (val) => {
+    if (parseInt(val) > -1) {
+      setErrorOne({
         ...error,
-        isValidType: false,
-        type: 'Please Select One'
+        isValidYear: true,
+        year: ''
       });
+      setYearOne(val);
     }
-
 
     else {
-      handleCalculate();
+      setErrorOne({
+        ...error,
+        isValidYear: false,
+        year: 'Enter Your Year'
+      });
+      setYearOne(val);
     }
   }
+
 
   const handleCalculate = () => {
-    let sumDay;
-    let sumMonth;
-    let sumYear;
 
-    if (typeValue === 'sun') {
-      sumDay = day + 90;
-      sumMonth = month + 57;
-      sumYear = year + 1
-    }
-    else if (typeValue === 'moon') {
-      sumDay = day + 0;
-      sumMonth = month + 60;
-      sumYear = year + 5;
-    }
-    else if (typeValue === 'mangal') {
-      sumDay = day + 120;
-      sumMonth = month + 44;
-      sumYear = year + 3;
-    }
-    else if (typeValue === 'rahu') {
-      sumDay = day + 120;
-      sumMonth = month + 44;
-      sumYear = year + 14;
-    }
-    else if (typeValue === 'guru') {
-      sumDay = day + 90;
-      sumMonth = month + 57;
-      sumYear = year + 11;
-    }
-    else if (typeValue === 'sani') {
-      sumDay = day + 60;
-      sumMonth = month + 46;
-      sumYear = year + 15;
-    }
-    else if (typeValue === 'buda') {
-      sumDay = day + 120;
-      sumMonth = month + 68;
-      sumYear = year + 11;
-    }
-    else {
-      sumDay = day + 120;
-      sumMonth = month + 44;
-      sumYear = year + 3;
-    }
-    let Answer = sumDay / 365 + sumMonth / 12 + sumYear;
-    setAnswer(Answer);
+    let Answer = day / 365 + month / 12 + year;
+
+    let AnswerOne = dayOne / 365 + monthOne / 12 + yearOne;
+
+    let ans = Answer * AnswerOne;
+
+    setAnswer(ans);
 
   }
-  
 
   return (
     <ScrollView style={styles.home_container}>
-      <View >
+      <View>
         <Center>
-          <Text style={styles.typeStyle}>Choose Type</Text>
-          <VStack alignItems='center' style={{width:'30%'}}>
-            <Select
-              // selectedValue={typeValue}
-              isInvalid={!error.isValidType}
-              type='text'
-              minWidth={'100%'}
-              accessibilityLabel="Select Type"
-              placeholderTextColor='gray'
-              placeholder="Select One"
-              onValueChange={(itemValue) => handleTypeChange(itemValue)}
-              _selectedItem={{
-                bg: "cyan.600",
-                fontSize: 20,
-                endIcon: <CheckIcon size={4} />,
-              }}
-            >
-              <Select.Item label="Sun" value="sun" />
-              <Select.Item label="Moon" value="moon" />
-              <Select.Item label="Mangal" value="mangal" />
-              <Select.Item label="Rahu" value="rahu" />
-              <Select.Item label="Guru" value="guru" />
-              <Select.Item label="Sani" value="sani" />
-              <Select.Item label="Buda" value="buda" />
-              <Select.Item label="Ketu" value="ketu" />
-              <Select.Item label="Sukra" value="sukra" />
-
-            </Select>
-            {
-              !error.isValidType ? <Text style={styles.errorTxt}>{error.type}</Text> : null
-            }
-          </VStack>
-          
-
           <View style={styles.inputWrapper}>
             <View style={{ paddingTop: 10 }}>
               <Input
                 w="90%"
                 placeholder="Enter Day"
-                _focus={{ borderColor: '#694fad' }}
                 _light={{
                   placeholderTextColor: "gray",
                 }}
@@ -241,7 +209,7 @@ const HomeScreen = () => {
                 !error.isValidMonth ? <Text style={styles.errorText}>{error.month}</Text> : null
               }
             </View>
-            <View style={{ paddingTop: 10 }}>
+            <View style={{ paddingTop: 12 }}>
               <Input
                 w="90%"
                 placeholder="Enter Year"
@@ -258,8 +226,54 @@ const HomeScreen = () => {
 
           </View>
 
+          <View style={styles.inputWrapper}>
+            <View style={{ paddingTop: 10 }}>
+              <Input
+                w="90%"
+                placeholder="Enter Day"
+                _light={{
+                  placeholderTextColor: "gray",
+                }}
+                onChangeText={(value) => handleDayChangeOne(value)}
+                isInvalid={!errorOne.isValidDay}
+              />
+              {
+                !errorOne.isValidDay ? <Text style={styles.errorText}>{errorOne.day}</Text> : null
+              }
+            </View>
+            <View style={{ paddingTop: 10 }}>
+              <Input
+                w="90%"
+                placeholder="Enter Month"
+                _light={{
+                  placeholderTextColor: "gray",
+                }}
+                onChangeText={(value) => handleMonthChangeOne(value)}
+                isInvalid={!errorOne.isValidMonth}
+
+              />
+              {
+                !errorOne.isValidMonth ? <Text style={styles.errorText}>{errorOne.month}</Text> : null
+              }
+            </View>
+            <View style={{ paddingTop: 12 }}>
+              <Input
+                w="90%"
+                placeholder="Enter Year"
+                _light={{
+                  placeholderTextColor: "gray",
+                }}
+                onChangeText={(value) => handleYearChangeOne(value)}
+                isInvalid={!errorOne.isValidYear}
+              />
+              {
+                !errorOne.isValidYear ? <Text style={styles.errorText}>{errorOne.year}</Text> : null
+              }
+            </View>
+
+          </View>
           <View style={styles.calculateMe}>
-            <Button style={{ backgroundColor: '#694fad' }} onPress={handleValidation}>
+            <Button style={{ backgroundColor: '#694fad' }} onPress={handleCalculate}>
               CALCULATE
             </Button>
           </View>
@@ -267,12 +281,13 @@ const HomeScreen = () => {
             <Text style={styles.answer}>{answer}</Text>
             {
               answer !== null ?
-                <TouchableOpacity onPress={() => Clipboard.setString('hello')}>
+                <TouchableOpacity>
                   <Ionicons style={styles.copy_icon} name="copy-outline" color='#694fad' size={25} />
                 </TouchableOpacity>
                 :
                 null
             }
+
           </View>
         </Center>
       </View>
@@ -285,10 +300,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: '100%'
   },
-
   typeStyle: {
     fontSize: 28,
-    marginVertical: 50
+    marginVertical: 30
   },
   selectItem: {
     fontSize: 19
@@ -297,15 +311,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    marginTop: '2%',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 35,
     paddingLeft: 20
+
 
   },
   calculateMe: {
-    marginTop: 45,
-
+    marginTop: 40
   },
   errorText: {
     color: 'red',
@@ -319,7 +333,8 @@ const styles = StyleSheet.create({
     marginLeft: 7
   },
   answer: {
-    marginVertical: 23,
+    marginTop: 23,
+    marginBottom: 23,
     fontSize: 20,
     color: '#694fad'
   },
@@ -332,7 +347,6 @@ const styles = StyleSheet.create({
   copy_icon:{ 
     marginLeft:15
   },
-
 })
 
-export default HomeScreen;
+export default MultiplierScreen;

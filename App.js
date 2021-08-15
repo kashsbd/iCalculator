@@ -1,12 +1,12 @@
 import React from 'react';
-import TopbarNavigator from './Navigator/TopbarNavigator';
 import { NativeBaseProvider } from 'native-base';
+import BottombarNavigator from './Navigator/BottombarNavigator';
 
 
-const App = () => {
+const App = (props) => {
   return (
     <NativeBaseProvider>
-       <TopbarNavigator />
+      <BottombarNavigator />
     </NativeBaseProvider>
   );
 }
