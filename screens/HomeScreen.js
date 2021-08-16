@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Center, Select, VStack, CheckIcon, Input, Button } from "native-base";
+import {
+  Center,
+  Select,
+  VStack,
+  CheckIcon,
+  NumberInput,
+  NumberInputField,
+  Button,
+} from "native-base";
 import {
   View,
   Text,
@@ -11,11 +19,11 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const HomeScreen = () => {
-  const [answer, setAnswer] = useState(null);
+  const [answer, setAnswer] = useState("");
   const [typeValue, setTypeValue] = useState("");
-  const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+  const [day, setDay] = useState(0);
+  const [month, setMonth] = useState(0);
+  const [year, setYear] = useState(0);
   const [error, setError] = useState({
     isValidDay: true,
     isValidMonth: true,
@@ -132,46 +140,55 @@ const HomeScreen = () => {
   const copyToClipboard = () => Clipboard.setString(answer);
 
   const handleCalculate = () => {
-    let sumDay;
-    let sumMonth;
-    let sumYear;
+    let sumDay = 0;
+    let sumMonth = 0;
+    let sumYear = 0;
 
     if (typeValue === "sun") {
-      sumDay = day + 90;
-      sumMonth = month + 57;
-      sumYear = year + 1;
+      sumDay = +day + 90;
+      sumMonth = +month + 57;
+      sumYear = +year + 1;
     } else if (typeValue === "moon") {
-      sumDay = day + 0;
-      sumMonth = month + 60;
-      sumYear = year + 5;
+      sumDay = +day + 0;
+      sumMonth = +month + 60;
+      sumYear = +year + 5;
     } else if (typeValue === "mangal") {
-      sumDay = day + 120;
-      sumMonth = month + 44;
-      sumYear = year + 3;
+      sumDay = +day + 120;
+      sumMonth = +month + 44;
+      sumYear = +year + 3;
     } else if (typeValue === "rahu") {
-      sumDay = day + 120;
-      sumMonth = month + 44;
-      sumYear = year + 14;
+      sumDay = +day + 120;
+      sumMonth = +month + 44;
+      sumYear = +year + 14;
     } else if (typeValue === "guru") {
-      sumDay = day + 90;
-      sumMonth = month + 57;
-      sumYear = year + 11;
+      sumDay = +day + 90;
+      sumMonth = +month + 57;
+      sumYear = +year + 11;
     } else if (typeValue === "sani") {
-      sumDay = day + 60;
-      sumMonth = month + 46;
-      sumYear = year + 15;
+      sumDay = +day + 60;
+      sumMonth = +month + 46;
+      sumYear = +year + 15;
     } else if (typeValue === "buda") {
-      sumDay = day + 120;
-      sumMonth = month + 68;
-      sumYear = year + 11;
+      sumDay = +day + 120;
+      sumMonth = +month + 68;
+      sumYear = +year + 11;
     } else {
-      sumDay = day + 120;
-      sumMonth = month + 44;
-      sumYear = year + 3;
+      sumDay = +day + 120;
+      sumMonth = +month + 44;
+      sumYear = +year + 3;
     }
 
-    const Answer = sumDay / 365 + sumMonth / 12 + sumYear;
-    setAnswer(Answer);
+    while (sumDay > 29) {
+      sumDay = sumDay - 29;
+      sumMonth++;
+    }
+
+    while (sumMonth > 11) {
+      sumMonth = sumMonth - 11;
+      sumYear++;
+    }
+
+    setAnswer(`${sumDay}/${sumMonth}/${sumYear}`);
   };
 
   return (
@@ -211,9 +228,10 @@ const HomeScreen = () => {
             ) : null}
           </VStack>
 
-          <View style={styles.inputWrapper}>
+          <View style={styles.NumberInputWrapper}>
             <View style={{ paddingTop: 17 }}>
-              <Input
+              <NumberInput
+                min={0}
                 w="90%"
                 placeholder="Enter Day"
                 _focus={{ borderColor: "#694fad" }}
@@ -222,13 +240,16 @@ const HomeScreen = () => {
                 }}
                 onChangeText={handleDayChange}
                 isInvalid={!error.isValidDay}
-              />
+              >
+                <NumberInputField />
+              </NumberInput>
               {!error.isValidDay ? (
                 <Text style={styles.errorText}>{error.day}</Text>
               ) : null}
             </View>
             <View style={{ paddingTop: 17 }}>
-              <Input
+              <NumberInput
+                min={0}
                 w="90%"
                 placeholder="Enter Month"
                 _light={{
@@ -242,7 +263,8 @@ const HomeScreen = () => {
               ) : null}
             </View>
             <View style={{ paddingTop: 17 }}>
-              <Input
+              <NumberInput
+                min={0}
                 w="90%"
                 placeholder="Enter Year"
                 _light={{
@@ -296,7 +318,7 @@ const styles = StyleSheet.create({
   selectItem: {
     fontSize: 19,
   },
-  inputWrapper: {
+  NumberInputWrapper: {
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
