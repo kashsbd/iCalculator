@@ -7,284 +7,121 @@ import {
   TouchableOpacity,
   Clipboard,
 } from "react-native";
-import { Center, Input, Button } from "native-base";
+import { Center, NumberInput, NumberInputField, Button } from "native-base";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const MultiplierScreen = () => {
-  const [answer, setAnswer] = useState(null);
-  const [day, setDay] = useState("");
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-  const [error, setError] = useState({
-    isValidDay: true,
-    isValidMonth: true,
-    isValidYear: true,
-    day: "",
-    month: "",
-    year: "",
-  });
+  const [answer, setAnswer] = useState("");
+  const [sec, setSec] = useState(0);
+  const [min, setMin] = useState(0);
+  const [degree, setDegree] = useState(0);
 
-  const [dayOne, setDayOne] = useState("");
-  const [monthOne, setMonthOne] = useState("");
-  const [yearOne, setYearOne] = useState("");
-  const [errorOne, setErrorOne] = useState({
-    isValidDay: true,
-    isValidMonth: true,
-    isValidYear: true,
-    day: "",
-    month: "",
-    year: "",
-  });
+  const [secOne, setSecOne] = useState(0);
+  const [minOne, setMinOne] = useState(0);
 
-  const handleDayChange = (val) => {
-    if (parseInt(val) > -1) {
-      setError({
-        ...error,
-        isValidDay: true,
-        day: "",
-      });
-      setDay(val);
-    } else {
-      setError({
-        ...error,
-        isValidDay: false,
-        day: "Enter Your Day",
-      });
-      setDay(val);
-    }
+
+
+  const handleSecChange = (e) => {
+    setSec(e.target.value);
   };
 
-  const handleDayChangeOne = (val) => {
-    if (parseInt(val) > -1) {
-      setError({
-        ...error,
-        isValidDay: true,
-        day: "",
-      });
-      setDayOne(val);
-    } else {
-      setErrorOne({
-        ...error,
-        isValidDay: false,
-        day: "Enter Your Day",
-      });
-      setDayOne(val);
-    }
+  const handleSecChangeOne = (e) => {
+    setSecOne(e.target.value);
   };
 
-  const handleMonthChange = (val) => {
-    if (parseInt(val) > -1) {
-      setError({
-        ...error,
-        isValidMonth: true,
-        month: "",
-      });
-      setMonth(val);
-    } else {
-      setError({
-        ...error,
-        isValidMonth: false,
-        month: "Enter your Month",
-      });
-      setMonth(val);
-    }
+  const handleMinChange = (e) => {
+    setMin(e.target.value);
   };
 
-  const handleMonthChangeOne = (val) => {
-    if (parseInt(val) > -1) {
-      setErrorOne({
-        ...error,
-        isValidMonth: true,
-        month: "",
-      });
-      setMonthOne(val);
-    } else {
-      setErrorOne({
-        ...error,
-        isValidMonth: false,
-        month: "Enter Your Month",
-      });
-      setMonthOne(val);
-    }
+  const handleMinChangeOne = (e) => {
+    setMinOne(e.target.value);
   };
 
-  const handleYearChange = (val) => {
-    if (parseInt(val) > -1) {
-      setError({
-        ...error,
-        isValidYear: true,
-        year: "",
-      });
-      setYear(val);
-    } else {
-      setError({
-        ...error,
-        isValidYear: false,
-        year: "Enter Your Year",
-      });
-      setYear(val);
-    }
+  const handleDegreeChange = (e) => {
+    setDegree(e.target.value);
   };
 
-  const handleYearChangeOne = (val) => {
-    if (parseInt(val) > -1) {
-      setErrorOne({
-        ...error,
-        isValidYear: true,
-        year: "",
-      });
-      setYearOne(val);
-    } else {
-      setErrorOne({
-        ...error,
-        isValidYear: false,
-        year: "Enter Your Year",
-      });
-      setYearOne(val);
-    }
-  };
 
   const copyToClipboard = () => Clipboard.setString(answer);
 
   const handleCalculate = () => {
-    if (day.trim().length === 0) {
-      setError({
-        ...error,
-        isValidDay: false,
-        day: "Enter Your Day",
-      });
-    } else if (month.trim().length === 0) {
-      setError({
-        ...error,
-        isValidMonth: false,
-        month: "Enter Your Month",
-      });
-    } else if (year.trim().length === 0) {
-      setError({
-        ...error,
-        isValidYear: false,
-        year: "Enter Your Year",
-      });
-    } else if (dayOne.trim().length === 0) {
-      setErrorOne({
-        ...error,
-        isValidDay: false,
-        day: "Enter Your Day",
-      });
-    } else if (monthOne.trim().length === 0) {
-      setErrorOne({
-        ...error,
-        isValidMonth: false,
-        month: "Enter Your Month",
-      });
-    } else if (yearOne.trim().length === 0) {
-      setErrorOne({
-        ...error,
-        isValidYear: false,
-        year: "Enter Your Year",
-      });
-    } else {
-      const Answer = day / 365 + month / 12 + year;
 
-      const AnswerOne = dayOne / 365 + monthOne / 12 + yearOne;
 
-      const ans = Answer * AnswerOne;
-
-      setAnswer(ans);
-    }
   };
 
   return (
     <ScrollView style={styles.homeContainer}>
       <View>
         <Center>
-          <View style={styles.inputWrapper}>
-            <View style={{ paddingTop: 10 }}>
-              <Input
-                w="90%"
-                placeholder="Enter Day"
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleDayChange}
-                isInvalid={!error.isValidDay}
-              />
-              {!error.isValidDay ? (
-                <Text style={styles.errorText}>{error.day}</Text>
-              ) : null}
+          <View style={styles.numberInputWrapper}>
+            <View style={styles.inputBox}>
+              <Text style={styles.labelText}>Seconds:&nbsp; </Text>
+              <NumberInput
+                min={0}
+                style={{ width: '90%', padding: 8 }}
+              >
+                <NumberInputField
+                  name="sec"
+                  _focus={{ padding: 2 }}
+                  onChange={handleSecChange}
+                />
+              </NumberInput>
             </View>
-            <View style={{ paddingTop: 10 }}>
-              <Input
-                w="90%"
-                placeholder="Enter Month"
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleMonthChange}
-                isInvalid={!error.isValidMonth}
-              />
-              {!error.isValidMonth ? (
-                <Text style={styles.errorText}>{error.month}</Text>
-              ) : null}
+            <View style={styles.inputBox}>
+              <Text style={styles.labelText}>Minutes:&nbsp; </Text>
+              <NumberInput
+                min={0}
+                style={{ width: '90%', padding: 8 }}
+              >
+                <NumberInputField
+                  name="min"
+                  _focus={{ padding: 2 }}
+                  onChange={handleMinChange}
+                />
+              </NumberInput>
             </View>
-            <View style={{ paddingTop: 12 }}>
-              <Input
-                w="90%"
-                placeholder="Enter Year"
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleYearChange}
-                isInvalid={!error.isValidYear}
-              />
-              {!error.isValidYear ? (
-                <Text style={styles.errorText}>{error.year}</Text>
-              ) : null}
+            <View style={styles.inputBox}>
+              <Text style={styles.labelText}>Degrees:&nbsp; </Text>
+              <NumberInput
+                min={0}
+                style={{ width: '90%', padding: 8 }}
+              >
+                <NumberInputField
+                  name="degree"
+                  _focus={{ padding: 2 }}
+                  onChange={handleDegreeChange}
+                />
+              </NumberInput>
             </View>
           </View>
 
-          <View style={styles.inputWrapper}>
-            <View style={{ paddingTop: 10 }}>
-              <Input
-                w="90%"
-                placeholder="Enter Day"
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleDayChangeOne}
-                isInvalid={!errorOne.isValidDay}
-              />
-              {!errorOne.isValidDay ? (
-                <Text style={styles.errorText}>{errorOne.day}</Text>
-              ) : null}
+          <View style={styles.numberInputWrapper}>
+            <View style={styles.inputBox}>
+              <Text style={styles.labelText}>Seconds:&nbsp; </Text>
+              <NumberInput
+                min={0}
+                max={20}
+                style={{ width: '90%', padding: 8 }}
+              >
+                <NumberInputField
+                  name="secOne"
+                  _focus={{ padding: 2, paddingRight: 0 }}
+                  onChange={handleSecChangeOne}
+                />
+              </NumberInput>
             </View>
-            <View style={{ paddingTop: 10 }}>
-              <Input
-                w="90%"
-                placeholder="Enter Month"
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleMonthChangeOne}
-                isInvalid={!errorOne.isValidMonth}
-              />
-              {!errorOne.isValidMonth ? (
-                <Text style={styles.errorText}>{errorOne.month}</Text>
-              ) : null}
-            </View>
-            <View style={{ paddingTop: 12 }}>
-              <Input
-                w="90%"
-                placeholder="Enter Year"
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleYearChangeOne}
-                isInvalid={!errorOne.isValidYear}
-              />
-              {!errorOne.isValidYear ? (
-                <Text style={styles.errorText}>{errorOne.year}</Text>
-              ) : null}
+            <View style={styles.inputBox}>
+              <Text style={styles.labelText}>Minutes:&nbsp; </Text>
+              <NumberInput
+                min={0}
+                style={{ width: '90%', padding: 8 }}
+              >
+                <NumberInputField
+                  name="minOne"
+                  _focus={{ padding: 2 }}
+                  onChange={handleMinChangeOne}
+                />
+              </NumberInput>
             </View>
           </View>
           <View style={styles.calculateMe}>
@@ -297,7 +134,7 @@ const MultiplierScreen = () => {
           </View>
           <View style={styles.copyAns}>
             <Text style={styles.answer}>{answer}</Text>
-            {answer !== null ? (
+            {answer.length > 0 ? (
               <TouchableOpacity onPress={copyToClipboard}>
                 <Ionicons
                   style={styles.copyIcon}
@@ -326,7 +163,7 @@ const styles = StyleSheet.create({
   selectItem: {
     fontSize: 19,
   },
-  inputWrapper: {
+  numberInputWrapper: {
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
@@ -364,6 +201,18 @@ const styles = StyleSheet.create({
   copyIcon: {
     marginLeft: 15,
   },
+  inputBox: {
+    paddingTop: 17,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+  },
+  labelText: {
+    paddingRight: 3,
+    fontSize: 16
+  }
 });
 
 export default MultiplierScreen;

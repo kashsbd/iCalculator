@@ -6,7 +6,7 @@ import {
   CheckIcon,
   NumberInput,
   NumberInputField,
-  Button,
+  Button
 } from "native-base";
 import {
   View,
@@ -25,13 +25,7 @@ const HomeScreen = () => {
   const [month, setMonth] = useState(0);
   const [year, setYear] = useState(0);
   const [error, setError] = useState({
-    isValidDay: true,
-    isValidMonth: true,
-    isValidYear: true,
     isValidType: true,
-    day: "",
-    month: "",
-    year: "",
     type: "",
   });
 
@@ -53,58 +47,16 @@ const HomeScreen = () => {
     }
   };
 
-  const handleDayChange = (val) => {
-    if (parseInt(val) > -1) {
-      setError({
-        ...error,
-        isValidDay: true,
-        day: "",
-      });
-      setDay(val);
-    } else {
-      setError({
-        ...error,
-        isValidDay: false,
-        day: "Enter Your Day",
-      });
-      setDay(val);
-    }
+  const handleDayChange = (e) => {
+    setDay(e.target.value);
   };
 
-  const handleMonthChange = (val) => {
-    if (parseInt(val) > -1) {
-      setError({
-        ...error,
-        isValidMonth: true,
-        month: "",
-      });
-      setMonth(val);
-    } else {
-      setError({
-        ...error,
-        isValidMonth: false,
-        month: "Enter Your Month",
-      });
-      setMonth(val);
-    }
+  const handleMonthChange = (e) => {
+    setMonth(e.target.value);
   };
 
-  const handleYearChange = (val) => {
-    if (parseInt(val) > -1) {
-      setError({
-        ...error,
-        isValidYear: true,
-        year: "",
-      });
-      setYear(val);
-    } else {
-      setError({
-        ...error,
-        isValidYear: false,
-        year: "Enter Your Year",
-      });
-      setYear(val);
-    }
+  const handleYearChange = (e) => {
+    setYear(e.target.value)
   };
 
   const handleValidation = () => {
@@ -114,25 +66,8 @@ const HomeScreen = () => {
         isValidType: false,
         type: "Please Select One",
       });
-    } else if (day.trim().length === 0) {
-      setError({
-        ...error,
-        isValidDay: false,
-        day: "Enter Your Day",
-      });
-    } else if (month.trim().length === 0) {
-      setError({
-        ...error,
-        isValidMonth: false,
-        month: "Enter Your Month",
-      });
-    } else if (year.trim().length === 0) {
-      setError({
-        ...error,
-        isValidYear: false,
-        year: "Enter Your Year",
-      });
-    } else {
+    }
+    else {
       handleCalculate();
     }
   };
@@ -228,54 +163,45 @@ const HomeScreen = () => {
             ) : null}
           </VStack>
 
-          <View style={styles.NumberInputWrapper}>
-            <View style={{ paddingTop: 17 }}>
+          <View style={styles.numberInputWrapper}>
+            <View style={styles.inputBox}>
+              <Text style={styles.labelText}>Day:&nbsp;&nbsp; </Text>
               <NumberInput
                 min={0}
-                w="90%"
-                placeholder="Enter Day"
-                _focus={{ borderColor: "#694fad" }}
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleDayChange}
-                isInvalid={!error.isValidDay}
+                style={{ width: '90%', padding: 8 }}
               >
-                <NumberInputField />
+                <NumberInputField
+                  name="day"
+                  _focus={{ padding: 2 }}
+                  onChange={handleDayChange}
+                />
               </NumberInput>
-              {!error.isValidDay ? (
-                <Text style={styles.errorText}>{error.day}</Text>
-              ) : null}
             </View>
-            <View style={{ paddingTop: 17 }}>
+            <View style={styles.inputBox}>
+              <Text style={styles.labelText}>Month: </Text>
               <NumberInput
                 min={0}
-                w="90%"
-                placeholder="Enter Month"
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleMonthChange}
-                isInvalid={!error.isValidMonth}
-              />
-              {!error.isValidMonth ? (
-                <Text style={styles.errorText}>{error.month}</Text>
-              ) : null}
+                style={{ width: '90%', padding: 8 }}
+              >
+                <NumberInputField
+                  name="month"
+                  _focus={{ padding: 2 }}
+                  onChange={handleMonthChange}
+                />
+              </NumberInput>
             </View>
-            <View style={{ paddingTop: 17 }}>
+            <View style={styles.inputBox}>
+              <Text style={styles.labelText}>Year:&nbsp;&nbsp; </Text>
               <NumberInput
                 min={0}
-                w="90%"
-                placeholder="Enter Year"
-                _light={{
-                  placeholderTextColor: "gray",
-                }}
-                onChangeText={handleYearChange}
-                isInvalid={!error.isValidYear}
-              />
-              {!error.isValidYear ? (
-                <Text style={styles.errorText}>{error.year}</Text>
-              ) : null}
+                style={{ width: '90%', padding: 8 }}
+              >
+                <NumberInputField
+                  name="year"
+                  _focus={{ padding: 2 }}
+                  onChange={handleYearChange}
+                />
+              </NumberInput>
             </View>
           </View>
 
@@ -287,9 +213,10 @@ const HomeScreen = () => {
               CALCULATE
             </Button>
           </View>
+
           <View style={styles.copyAns}>
             <Text style={styles.answer}>{answer}</Text>
-            {answer !== null ? (
+            {answer.length > 0 ? (
               <TouchableOpacity onPress={copyToClipboard}>
                 <Ionicons
                   style={styles.copyIcon}
@@ -318,7 +245,7 @@ const styles = StyleSheet.create({
   selectItem: {
     fontSize: 19,
   },
-  NumberInputWrapper: {
+  numberInputWrapper: {
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
@@ -327,6 +254,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 20,
   },
+  inputBox: {
+    paddingTop: 17,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+  },
+
   calculateMe: {
     marginTop: 45,
   },
@@ -354,6 +290,11 @@ const styles = StyleSheet.create({
   copyIcon: {
     marginLeft: 15,
   },
+  labelText: {
+    paddingRight: 3,
+    fontSize: 16
+  }
+
 });
 
 export default HomeScreen;
