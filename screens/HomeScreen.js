@@ -196,7 +196,7 @@ const HomeScreen = () => {
       <View >
         <Center>
           <Text style={styles.typeStyle}>Choose Type</Text>
-          <VStack style={{ width: '51%' }}>
+          <VStack  style={{ width: '40%',display:'flex',alignItems:'center'}}>
             <Select
               selectedValue={typeValue}
               isInvalid={!error.isValidType}
@@ -208,7 +208,8 @@ const HomeScreen = () => {
               _selectedItem={{
                 bg: "cyan.600",
                 fontSize: 20,
-                endIcon: <CheckIcon size={4} />,
+                endIcon:<CheckIcon size={4} />
+                ,
               }}
             >
               <Select.Item label="Sun" value="sun" />
@@ -327,11 +328,11 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginTop: 5,
-    marginLeft: 16
+    alignSelf:'center'
   },
   errorTxt: {
     color: 'red',
-    alignSelf: 'flex-start',
+    alignSelf:'center',
     marginTop: 5,
     //marginLeft: 7
   },

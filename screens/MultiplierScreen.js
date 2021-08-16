@@ -172,39 +172,39 @@ const MultiplierScreen = () => {
         day: 'Enter Your Day'
       });
     }
-    else if(month.trim().length === 0){
+    else if (month.trim().length === 0) {
       setError({
         ...error,
         isValidMonth: false,
         month: 'Enter Your Month'
       });
     }
-    else if(year.trim().length === 0){
+    else if (year.trim().length === 0) {
       setError({
         ...error,
-        isValidYear:false,
-        year:'Enter Your Year'
+        isValidYear: false,
+        year: 'Enter Your Year'
       })
     }
-    else if(dayOne.trim().length === 0){
+    else if (dayOne.trim().length === 0) {
       setErrorOne({
         ...error,
-        isValidDay:false,
-        day:'Enter Your Day'
+        isValidDay: false,
+        day: 'Enter Your Day'
       })
     }
-    else if(monthOne.trim().length === 0){
+    else if (monthOne.trim().length === 0) {
       setErrorOne({
         ...error,
-        isValidMonth:false,
-        month:'Enter Your Month'
+        isValidMonth: false,
+        month: 'Enter Your Month'
       })
     }
-    else if(yearOne.trim().length === 0){
+    else if (yearOne.trim().length === 0) {
       setErrorOne({
         ...error,
-        isValidYear:false,
-        year:'Enter Your Year'
+        isValidYear: false,
+        year: 'Enter Your Year'
       })
     }
     else {
@@ -368,11 +368,11 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginTop: 5,
-    marginLeft: 16
+    alignSelf: 'center'
   },
   errorTxt: {
     color: 'red',
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     marginTop: -10,
     marginLeft: 7
   },
