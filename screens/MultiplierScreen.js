@@ -1,226 +1,201 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Clipboard } from 'react-native';
-import { Center, Input, Button } from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
-
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Clipboard,
+} from "react-native";
+import { Center, Input, Button } from "native-base";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const MultiplierScreen = () => {
-
   const [answer, setAnswer] = useState(null);
-  const [day, setDay] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
   const [error, setError] = useState({
     isValidDay: true,
     isValidMonth: true,
     isValidYear: true,
-    day: '',
-    month: '',
-    year: '',
-
+    day: "",
+    month: "",
+    year: "",
   });
 
-  const [dayOne, setDayOne] = useState('');
-  const [monthOne, setMonthOne] = useState('');
-  const [yearOne, setYearOne] = useState('');
+  const [dayOne, setDayOne] = useState("");
+  const [monthOne, setMonthOne] = useState("");
+  const [yearOne, setYearOne] = useState("");
   const [errorOne, setErrorOne] = useState({
     isValidDay: true,
     isValidMonth: true,
     isValidYear: true,
-    day: '',
-    month: '',
-    year: '',
-
+    day: "",
+    month: "",
+    year: "",
   });
 
-
-
-
   const handleDayChange = (val) => {
-
     if (parseInt(val) > -1) {
       setError({
         ...error,
         isValidDay: true,
-        day: ''
+        day: "",
       });
       setDay(val);
-    }
-
-    else {
+    } else {
       setError({
         ...error,
         isValidDay: false,
-        day: 'Enter Your Day'
+        day: "Enter Your Day",
       });
       setDay(val);
     }
-
-  }
+  };
 
   const handleDayChangeOne = (val) => {
-
     if (parseInt(val) > -1) {
       setError({
         ...error,
         isValidDay: true,
-        day: ''
+        day: "",
       });
       setDayOne(val);
-    }
-
-    else {
+    } else {
       setErrorOne({
         ...error,
         isValidDay: false,
-        day: 'Enter Your Day'
+        day: "Enter Your Day",
       });
       setDayOne(val);
     }
-
-  }
+  };
 
   const handleMonthChange = (val) => {
     if (parseInt(val) > -1) {
       setError({
         ...error,
         isValidMonth: true,
-        month: ''
+        month: "",
       });
       setMonth(val);
-    }
-
-    else {
+    } else {
       setError({
         ...error,
         isValidMonth: false,
-        month: 'Enter your Month'
+        month: "Enter your Month",
       });
       setMonth(val);
     }
-  }
+  };
 
   const handleMonthChangeOne = (val) => {
     if (parseInt(val) > -1) {
       setErrorOne({
         ...error,
         isValidMonth: true,
-        month: ''
+        month: "",
       });
       setMonthOne(val);
-    }
-
-    else {
+    } else {
       setErrorOne({
         ...error,
         isValidMonth: false,
-        month: 'Enter Your Month'
+        month: "Enter Your Month",
       });
       setMonthOne(val);
     }
-  }
+  };
 
   const handleYearChange = (val) => {
     if (parseInt(val) > -1) {
       setError({
         ...error,
         isValidYear: true,
-        year: ''
+        year: "",
       });
       setYear(val);
-    }
-
-    else {
+    } else {
       setError({
         ...error,
         isValidYear: false,
-        year: 'Enter Your Year'
+        year: "Enter Your Year",
       });
       setYear(val);
     }
-  }
+  };
 
   const handleYearChangeOne = (val) => {
     if (parseInt(val) > -1) {
       setErrorOne({
         ...error,
         isValidYear: true,
-        year: ''
+        year: "",
       });
       setYearOne(val);
-    }
-
-    else {
+    } else {
       setErrorOne({
         ...error,
         isValidYear: false,
-        year: 'Enter Your Year'
+        year: "Enter Your Year",
       });
       setYearOne(val);
     }
-  }
+  };
 
+  const copyToClipboard = () => Clipboard.setString(answer);
 
   const handleCalculate = () => {
-
     if (day.trim().length === 0) {
       setError({
         ...error,
         isValidDay: false,
-        day: 'Enter Your Day'
+        day: "Enter Your Day",
       });
-    }
-    else if (month.trim().length === 0) {
+    } else if (month.trim().length === 0) {
       setError({
         ...error,
         isValidMonth: false,
-        month: 'Enter Your Month'
+        month: "Enter Your Month",
       });
-    }
-    else if (year.trim().length === 0) {
+    } else if (year.trim().length === 0) {
       setError({
         ...error,
         isValidYear: false,
-        year: 'Enter Your Year'
-      })
-    }
-    else if (dayOne.trim().length === 0) {
+        year: "Enter Your Year",
+      });
+    } else if (dayOne.trim().length === 0) {
       setErrorOne({
         ...error,
         isValidDay: false,
-        day: 'Enter Your Day'
-      })
-    }
-    else if (monthOne.trim().length === 0) {
+        day: "Enter Your Day",
+      });
+    } else if (monthOne.trim().length === 0) {
       setErrorOne({
         ...error,
         isValidMonth: false,
-        month: 'Enter Your Month'
-      })
-    }
-    else if (yearOne.trim().length === 0) {
+        month: "Enter Your Month",
+      });
+    } else if (yearOne.trim().length === 0) {
       setErrorOne({
         ...error,
         isValidYear: false,
-        year: 'Enter Your Year'
-      })
-    }
-    else {
-      let Answer = day / 365 + month / 12 + year;
+        year: "Enter Your Year",
+      });
+    } else {
+      const Answer = day / 365 + month / 12 + year;
 
-      let AnswerOne = dayOne / 365 + monthOne / 12 + yearOne;
+      const AnswerOne = dayOne / 365 + monthOne / 12 + yearOne;
 
-      let ans = Answer * AnswerOne;
+      const ans = Answer * AnswerOne;
 
       setAnswer(ans);
     }
-
-  }
+  };
 
   return (
-    <ScrollView style={styles.home_container}>
+    <ScrollView style={styles.homeContainer}>
       <View>
         <Center>
           <View style={styles.inputWrapper}>
@@ -231,12 +206,12 @@ const MultiplierScreen = () => {
                 _light={{
                   placeholderTextColor: "gray",
                 }}
-                onChangeText={(value) => handleDayChange(value)}
+                onChangeText={handleDayChange}
                 isInvalid={!error.isValidDay}
               />
-              {
-                !error.isValidDay ? <Text style={styles.errorText}>{error.day}</Text> : null
-              }
+              {!error.isValidDay ? (
+                <Text style={styles.errorText}>{error.day}</Text>
+              ) : null}
             </View>
             <View style={{ paddingTop: 10 }}>
               <Input
@@ -245,13 +220,12 @@ const MultiplierScreen = () => {
                 _light={{
                   placeholderTextColor: "gray",
                 }}
-                onChangeText={(value) => handleMonthChange(value)}
+                onChangeText={handleMonthChange}
                 isInvalid={!error.isValidMonth}
-
               />
-              {
-                !error.isValidMonth ? <Text style={styles.errorText}>{error.month}</Text> : null
-              }
+              {!error.isValidMonth ? (
+                <Text style={styles.errorText}>{error.month}</Text>
+              ) : null}
             </View>
             <View style={{ paddingTop: 12 }}>
               <Input
@@ -260,14 +234,13 @@ const MultiplierScreen = () => {
                 _light={{
                   placeholderTextColor: "gray",
                 }}
-                onChangeText={(value) => handleYearChange(value)}
+                onChangeText={handleYearChange}
                 isInvalid={!error.isValidYear}
               />
-              {
-                !error.isValidYear ? <Text style={styles.errorText}>{error.year}</Text> : null
-              }
+              {!error.isValidYear ? (
+                <Text style={styles.errorText}>{error.year}</Text>
+              ) : null}
             </View>
-
           </View>
 
           <View style={styles.inputWrapper}>
@@ -278,12 +251,12 @@ const MultiplierScreen = () => {
                 _light={{
                   placeholderTextColor: "gray",
                 }}
-                onChangeText={(value) => handleDayChangeOne(value)}
+                onChangeText={handleDayChangeOne}
                 isInvalid={!errorOne.isValidDay}
               />
-              {
-                !errorOne.isValidDay ? <Text style={styles.errorText}>{errorOne.day}</Text> : null
-              }
+              {!errorOne.isValidDay ? (
+                <Text style={styles.errorText}>{errorOne.day}</Text>
+              ) : null}
             </View>
             <View style={{ paddingTop: 10 }}>
               <Input
@@ -292,13 +265,12 @@ const MultiplierScreen = () => {
                 _light={{
                   placeholderTextColor: "gray",
                 }}
-                onChangeText={(value) => handleMonthChangeOne(value)}
+                onChangeText={handleMonthChangeOne}
                 isInvalid={!errorOne.isValidMonth}
-
               />
-              {
-                !errorOne.isValidMonth ? <Text style={styles.errorText}>{errorOne.month}</Text> : null
-              }
+              {!errorOne.isValidMonth ? (
+                <Text style={styles.errorText}>{errorOne.month}</Text>
+              ) : null}
             </View>
             <View style={{ paddingTop: 12 }}>
               <Input
@@ -307,90 +279,91 @@ const MultiplierScreen = () => {
                 _light={{
                   placeholderTextColor: "gray",
                 }}
-                onChangeText={(value) => handleYearChangeOne(value)}
+                onChangeText={handleYearChangeOne}
                 isInvalid={!errorOne.isValidYear}
               />
-              {
-                !errorOne.isValidYear ? <Text style={styles.errorText}>{errorOne.year}</Text> : null
-              }
+              {!errorOne.isValidYear ? (
+                <Text style={styles.errorText}>{errorOne.year}</Text>
+              ) : null}
             </View>
-
           </View>
           <View style={styles.calculateMe}>
-            <Button style={{ backgroundColor: '#694fad' }} onPress={handleCalculate}>
+            <Button
+              style={{ backgroundColor: "#694fad" }}
+              onPress={handleCalculate}
+            >
               CALCULATE
             </Button>
           </View>
-          <View style={styles.copy_ans}>
+          <View style={styles.copyAns}>
             <Text style={styles.answer}>{answer}</Text>
-            {
-              answer !== null ?
-                <TouchableOpacity onPress={() => Clipboard.setString(answer)}>
-                  <Ionicons style={styles.copy_icon} name="copy-outline" color='#694fad' size={25} />
-                </TouchableOpacity>
-                :
-                null
-            }
-
+            {answer !== null ? (
+              <TouchableOpacity onPress={copyToClipboard}>
+                <Ionicons
+                  style={styles.copyIcon}
+                  name="copy-outline"
+                  color="#694fad"
+                  size={25}
+                />
+              </TouchableOpacity>
+            ) : null}
           </View>
         </Center>
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-  home_container: {
-    backgroundColor: '#fff',
-    height: '100%'
+  homeContainer: {
+    backgroundColor: "#fff",
+    height: "100%",
   },
   typeStyle: {
     fontSize: 28,
-    marginVertical: 30
+    marginVertical: 30,
   },
   selectItem: {
-    fontSize: 19
+    fontSize: 19,
   },
   inputWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 35,
-    paddingLeft: 20
-
-
+    paddingLeft: 20,
   },
   calculateMe: {
-    marginTop: 40
+    marginTop: 40,
   },
   errorText: {
-    color: 'red',
+    color: "red",
     marginTop: 5,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   errorTxt: {
-    color: 'red',
-    alignSelf: 'center',
+    color: "red",
+    alignSelf: "center",
     marginTop: -10,
-    marginLeft: 7
+    marginLeft: 7,
   },
   answer: {
     marginTop: 23,
     marginBottom: 23,
     fontSize: 20,
-    color: '#694fad'
+    color: "#694fad",
   },
-  copy_ans: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+  copyAns: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  copy_icon: {
-    marginLeft: 15
+  copyIcon: {
+    marginLeft: 15,
   },
-})
+});
 
 export default MultiplierScreen;
