@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     flex:1,
     height:'100%',
     backgroundColor:'#fff',
-    paddingTop:'20%',
     alignItems:'center',
+    justifyContent:'center'
     
   },
   version_size:{

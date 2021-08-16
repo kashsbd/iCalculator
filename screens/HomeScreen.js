@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Center, Select, VStack, CheckIcon, Input, Button } from 'native-base';
-import { View, Text, StyleSheet, ScrollView,TouchableOpacity,Clipboard } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Clipboard } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -114,8 +114,27 @@ const HomeScreen = () => {
         type: 'Please Select One'
       });
     }
-
-
+    else if (day.trim().length === 0) {
+      setError({
+        ...error,
+        isValidDay: false,
+        day: 'Enter Your Day'
+      });
+    }
+    else if (month.trim().length === 0) {
+      setError({
+        ...error,
+        isValidMonth: false,
+        month: 'Enter Your Month'
+      });
+    }
+    else if (year.trim().length === 0) {
+      setError({
+        ...error,
+        isValidYear: false,
+        year: 'Enter Your Year'
+      })
+    }
     else {
       handleCalculate();
     }
@@ -170,18 +189,17 @@ const HomeScreen = () => {
     setAnswer(Answer);
 
   }
-  
+
 
   return (
     <ScrollView style={styles.home_container}>
       <View >
         <Center>
           <Text style={styles.typeStyle}>Choose Type</Text>
-          <VStack alignItems='center' style={{width:'30%'}}>
+          <VStack style={{ width: '51%' }}>
             <Select
-              // selectedValue={typeValue}
+              selectedValue={typeValue}
               isInvalid={!error.isValidType}
-              type='text'
               minWidth={'100%'}
               accessibilityLabel="Select Type"
               placeholderTextColor='gray'
@@ -208,10 +226,9 @@ const HomeScreen = () => {
               !error.isValidType ? <Text style={styles.errorTxt}>{error.type}</Text> : null
             }
           </VStack>
-          
 
           <View style={styles.inputWrapper}>
-            <View style={{ paddingTop: 10 }}>
+            <View style={{ paddingTop: 17 }}>
               <Input
                 w="90%"
                 placeholder="Enter Day"
@@ -226,7 +243,7 @@ const HomeScreen = () => {
                 !error.isValidDay ? <Text style={styles.errorText}>{error.day}</Text> : null
               }
             </View>
-            <View style={{ paddingTop: 10 }}>
+            <View style={{ paddingTop: 17 }}>
               <Input
                 w="90%"
                 placeholder="Enter Month"
@@ -241,7 +258,7 @@ const HomeScreen = () => {
                 !error.isValidMonth ? <Text style={styles.errorText}>{error.month}</Text> : null
               }
             </View>
-            <View style={{ paddingTop: 10 }}>
+            <View style={{ paddingTop: 17 }}>
               <Input
                 w="90%"
                 placeholder="Enter Year"
@@ -267,7 +284,7 @@ const HomeScreen = () => {
             <Text style={styles.answer}>{answer}</Text>
             {
               answer !== null ?
-                <TouchableOpacity onPress={() => Clipboard.setString('hello')}>
+                <TouchableOpacity onPress={() => Clipboard.setString(answer)}>
                   <Ionicons style={styles.copy_icon} name="copy-outline" color='#694fad' size={25} />
                 </TouchableOpacity>
                 :
@@ -297,7 +314,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    marginTop: '2%',
+    marginTop: '1%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 20
@@ -315,22 +332,22 @@ const styles = StyleSheet.create({
   errorTxt: {
     color: 'red',
     alignSelf: 'flex-start',
-    marginTop: -10,
-    marginLeft: 7
+    marginTop: 5,
+    //marginLeft: 7
   },
   answer: {
     marginVertical: 23,
     fontSize: 20,
     color: '#694fad'
   },
-  copy_ans:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center'
+  copy_ans: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  copy_icon:{ 
-    marginLeft:15
+  copy_icon: {
+    marginLeft: 15
   },
 
 })

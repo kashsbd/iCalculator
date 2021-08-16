@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Clipboard } from 'react-native';
 import { Center, Input, Button } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -165,13 +165,57 @@ const MultiplierScreen = () => {
 
   const handleCalculate = () => {
 
-    let Answer = day / 365 + month / 12 + year;
+    if (day.trim().length === 0) {
+      setError({
+        ...error,
+        isValidDay: false,
+        day: 'Enter Your Day'
+      });
+    }
+    else if(month.trim().length === 0){
+      setError({
+        ...error,
+        isValidMonth: false,
+        month: 'Enter Your Month'
+      });
+    }
+    else if(year.trim().length === 0){
+      setError({
+        ...error,
+        isValidYear:false,
+        year:'Enter Your Year'
+      })
+    }
+    else if(dayOne.trim().length === 0){
+      setErrorOne({
+        ...error,
+        isValidDay:false,
+        day:'Enter Your Day'
+      })
+    }
+    else if(monthOne.trim().length === 0){
+      setErrorOne({
+        ...error,
+        isValidMonth:false,
+        month:'Enter Your Month'
+      })
+    }
+    else if(yearOne.trim().length === 0){
+      setErrorOne({
+        ...error,
+        isValidYear:false,
+        year:'Enter Your Year'
+      })
+    }
+    else {
+      let Answer = day / 365 + month / 12 + year;
 
-    let AnswerOne = dayOne / 365 + monthOne / 12 + yearOne;
+      let AnswerOne = dayOne / 365 + monthOne / 12 + yearOne;
 
-    let ans = Answer * AnswerOne;
+      let ans = Answer * AnswerOne;
 
-    setAnswer(ans);
+      setAnswer(ans);
+    }
 
   }
 
@@ -281,7 +325,7 @@ const MultiplierScreen = () => {
             <Text style={styles.answer}>{answer}</Text>
             {
               answer !== null ?
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => Clipboard.setString(answer)}>
                   <Ionicons style={styles.copy_icon} name="copy-outline" color='#694fad' size={25} />
                 </TouchableOpacity>
                 :
@@ -338,14 +382,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#694fad'
   },
-  copy_ans:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center'
+  copy_ans: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  copy_icon:{ 
-    marginLeft:15
+  copy_icon: {
+    marginLeft: 15
   },
 })
 
