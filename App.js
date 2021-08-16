@@ -2,6 +2,8 @@ import React from "react";
 import { NativeBaseProvider } from "native-base";
 import BottombarNavigator from "./navigator/BottombarNavigator";
 
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+
 const App = () => {
   return (
     <NativeBaseProvider>
@@ -11,3 +13,8 @@ const App = () => {
 };
 
 export default App;
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+serviceWorkerRegistration.register();
