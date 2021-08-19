@@ -1,8 +1,8 @@
 import React from "react";
 import { NativeBaseProvider } from "native-base";
-import BottombarNavigator from "./navigator/BottombarNavigator";
+import BottombarNavigator from "./src/navigator/BottombarNavigator";
 
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 
 const App = () => {
   return (
